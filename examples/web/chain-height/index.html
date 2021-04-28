@@ -8,12 +8,17 @@
     <div id="chainHeight">Loading...</div>
     <script type="module">
       // Import ES modules from the npm packages via the unpkg.com CDN
-      import { LotusRPC } from 'https://unpkg.com/@filecoin-shipyard/lotus-client-rpc?module'
+      
+      // import { mainnet } from 'https://unpkg.com/@filecoin-shipyard/lotus-client-schema'
+      import { mainnet } from 'https://unpkg.com/@filecoin-shipyard/lotus-client-schema@2.0.0/index.js?module' // +++ 1
       import { BrowserProvider } from 'https://unpkg.com/@filecoin-shipyard/lotus-client-provider-browser?module'
-      import { testnet } from 'https://unpkg.com/@filecoin-shipyard/lotus-client-schema?module'
+      // import { testnet } from 'https://unpkg.com/@filecoin-shipyard/lotus-client-schema?module'
+      import { LotusRPC } from 'https://hdcafe.com/filecoin/lotus-client-rpc.js' // +++ 2
+
 
       // Public endpoint for demos
-      const endpointUrl = 'wss://lotus.testground.ipfs.team/api/0/node/rpc/v0'
+      //const endpointUrl = 'wss://lotus.testground.ipfs.team/api/0/node/rpc/v0'
+      const endpointUrl = 'ws://143.198.51.109:80/rpc/v0' // +++ 3
       // To connect to your local Lotus node, try using:
       // const endpointUrl = 'ws://localhost:1234/rpc/v0'
 
@@ -32,7 +37,8 @@
         const chainHeightEl = document.getElementById('chainHeight')
         while (true) {
           const { Height: height } = await client.chainHead()
-          chainHeightEl.textContent = height
+          // chainHeightEl.textContent = height                                  
+          chainHeightEl.textContent = height + ' @'+(new Date).toLocaleString() // +++ 4
           await new Promise(resolve => { setTimeout(resolve, 1000) })
         }
       }
